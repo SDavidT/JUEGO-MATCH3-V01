@@ -23,7 +23,6 @@ public class Dot : MonoBehaviour
         board=FindObjectOfType<Board>();
         targetX=(int)transform.position.x;
         targetY=(int)transform.position.y;
-
         row=targetY;
         column=targetX;
 
@@ -44,7 +43,7 @@ public class Dot : MonoBehaviour
             board.allDots[column,row]=this.gameObject;
 
         }
-        if(Mathf.Abs(targetY-transform.position.y)>1.1){
+        if(Mathf.Abs(targetY-transform.position.y)>.1){
             tempPosition=new Vector2 (transform.position.x,targetY);
             transform.position=Vector2.Lerp(transform.position, tempPosition, .4f);
 
@@ -77,8 +76,8 @@ public class Dot : MonoBehaviour
     void MovePieces(){
         if(swipeAngle>-45 && swipeAngle<=45 && column<board.width){ // ir a la derecha
             otherDot=board.allDots[column+1,row];
-            otherDot.GetComponent<Dot>().column-=1;
-            column+=1;
+            otherDot.GetComponent<Dot>().column=otherDot.GetComponent<Dot>().column-1;//desplazamiento del punto intercambiado - vecino
+            column=column+1;//desplazamiento del punto seleccionado
         }else if(swipeAngle>45 && swipeAngle<=135 && row< board.height){ // ir para arriba
             otherDot=board.allDots[column,row+1];
             otherDot.GetComponent<Dot>().row-=1;

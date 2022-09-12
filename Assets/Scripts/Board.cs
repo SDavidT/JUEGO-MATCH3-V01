@@ -28,13 +28,13 @@ public class Board : MonoBehaviour
         for (int i = 0; i<width; i++){
 
             for (int j = 0; j<height; j++){
-                
+                // creacion de mosaicos o matriz
                 Vector2 tempPosition= new Vector2(i,j);// representacion de vectores y posicion 2d con ejes X y Y
-                
                 GameObject backgroundTile = Instantiate (tilePrefab, tempPosition, Quaternion.identity) as GameObject; // clona objetos moviendo la posicion y con rotacion 0
                 backgroundTile.transform.parent=this.transform; // se asigna cada objeto al objeto padre
                 backgroundTile.name="( " + i + ", " + j + " )"; // se asigna el nombre a cada objeto
 
+                // crear puntos de colores
                 int dotToUse = Random.Range(0,dots.Length);
                 GameObject dot = Instantiate(dots[dotToUse],tempPosition, Quaternion.identity);
                 dot.transform.parent= this.transform;
