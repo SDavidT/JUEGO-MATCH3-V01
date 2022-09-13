@@ -19,6 +19,7 @@ public class Board : MonoBehaviour
         allTiles=new BackgroundTile[width, height];
         allDots=new GameObject[width,height];
         SetUp();
+        //hola
         
 
     }
@@ -97,7 +98,7 @@ public class Board : MonoBehaviour
 
         }
     }
-    
+
 
     public void DestroyMatches(){
 
