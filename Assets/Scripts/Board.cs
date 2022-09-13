@@ -39,6 +39,7 @@ public class Board : MonoBehaviour
                 int dotToUse = Random.Range(0,dots.Length);
                 int maxIterations=0;
 
+                // bucle para evitar que se repitan puntos al inciar el juego 
                 while(MatchesAt(i,j,dots[dotToUse])&& maxIterations<100){
                     dotToUse=Random.Range(0,dots.Length);
                     maxIterations++;
@@ -56,6 +57,7 @@ public class Board : MonoBehaviour
 
     }
 
+    // Generar puntos no repetidos al iniciar el juego 
     private bool MatchesAt(int column, int row, GameObject piece){
 
         if(column>1 && row >1){
@@ -88,7 +90,7 @@ public class Board : MonoBehaviour
 
     }
 
-
+    //Destruye el punto la badera true
     private void DestroyMatchesAt(int column, int row){
         
         if (allDots[column, row].GetComponent<Dot>().isMatched){
@@ -100,6 +102,7 @@ public class Board : MonoBehaviour
     }
 
 
+    // recorre la matriz completa y llama a la función de destrucción
     public void DestroyMatches(){
 
         for (int i=0; i<width; i++){
@@ -110,5 +113,31 @@ public class Board : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(DecreaseRowCo());
+    }
+
+
+    //Corrutina para desplazamiento vertical de los puntos
+
+    private IEnumerator DecreaseRowCo(){ 
+        int nullCount=0;
+
+        for (int i =0; i<width; i++){
+            
+            for(int j=0; j<height; j++){
+
+                if (allDots[i,j]==null){
+                    nullCount++;
+
+                } else if(nullCount>0){
+                    allDots[i,j].GetComponent<Dot>().row-=nullCount;
+                    allDots[i,j]=null;
+                }
+            }
+            nullCount=0;
+        }
+
+        yield return new WaitForSeconds(.4f);
     }
 }
