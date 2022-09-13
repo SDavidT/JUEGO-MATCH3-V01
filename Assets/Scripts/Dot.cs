@@ -18,6 +18,7 @@ public class Dot : MonoBehaviour
     public bool isMatched=false;
     public int previousColumn;
     public int previousRow;
+    public float swipeResiste=1f;
 
 
 
@@ -41,13 +42,13 @@ public class Dot : MonoBehaviour
     {
         FindMatches();
         if(isMatched){
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
-            mySprite.color=new Color(1f,1f,1f,.2f);
+            SpriteRenderer mySprite = GetComponent<SpriteRenderer>(); //generamos un componente sprite render 
+            mySprite.color=new Color(1f,1f,1f,.2f); // cambiamos de color los puntos
         }
 
 
 
-
+        // movimiento de puntos
         targetX=column;
         targetY=row;
         if(Mathf.Abs(targetX-transform.position.x)>.1){
@@ -73,8 +74,9 @@ public class Dot : MonoBehaviour
 
     }
 
+    // retorno del punto cuando no son iguales
     public IEnumerator CheckMoveCo(){
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f); // timepo de retorno 
         if (otherDot!=null){
             if(!isMatched && !otherDot.GetComponent<Dot>().isMatched){
 
@@ -98,13 +100,13 @@ public class Dot : MonoBehaviour
     }
 
     void CalculateAngle(){
-        swipeAngle=Mathf.Atan2(finalTouchPosition.y-firstTouchPosition.y,finalTouchPosition.x-firstTouchPosition.x)*180/Mathf.PI;
-        //Debug.Log(swipeAngle);
-        MovePieces();
-
-
+        if (Mathf.Abs(finalTouchPosition.y-firstTouchPosition.y)>swipeResiste || Mathf.Abs(finalTouchPosition.x-firstTouchPosition.x)>swipeResiste ){
+            swipeAngle=Mathf.Atan2(finalTouchPosition.y-firstTouchPosition.y,finalTouchPosition.x-firstTouchPosition.x)*180/Mathf.PI;
+            MovePieces();
+        }
     }
 
+    // detecto y seteo el desplazamiento 
     void MovePieces(){
         if(swipeAngle>-45 && swipeAngle<=45 && column<board.width-1){ // ir a la derecha
             otherDot=board.allDots[column+1,row];
@@ -126,6 +128,8 @@ public class Dot : MonoBehaviour
 
         StartCoroutine(CheckMoveCo());
     }
+
+    // buscar 3 puntos iguales 
 
     void FindMatches(){
         if (column>0 && column < board.width-1){
@@ -155,7 +159,11 @@ public class Dot : MonoBehaviour
 
             }
         }
-        
+    }
+
+
+    public void Delete(){
+
 
     }
 
