@@ -36,10 +36,13 @@ public class Board : MonoBehaviour
 
                 // crear puntos de colores
                 int dotToUse = Random.Range(0,dots.Length);
+                int maxIterations=0;
 
-                while(MatchesAt(i,j,dots[dotToUse])){
+                while(MatchesAt(i,j,dots[dotToUse])&& maxIterations<100){
                     dotToUse=Random.Range(0,dots.Length);
+                    maxIterations++;
                 }
+                maxIterations=0;
                 GameObject dot = Instantiate(dots[dotToUse],tempPosition, Quaternion.identity);
                 dot.transform.parent= this.transform;
                 dot.name= "( " + i + ", " + j + " )";
@@ -70,9 +73,11 @@ public class Board : MonoBehaviour
                 if(allDots[column,row-1].tag==piece.tag && allDots[column,row-2].tag==piece.tag){
                     return true;
                 }
+            }
 
-                //
-                if(allDots[column,row-1].tag==piece.tag && allDots[column,row-2].tag==piece.tag){
+            if(column>1){
+                
+                if(allDots[column-1,row].tag==piece.tag && allDots[column-2,row].tag==piece.tag){
                     return true;
                 }
             }
@@ -80,5 +85,29 @@ public class Board : MonoBehaviour
 
         return false;
 
+    }
+
+
+    private void DestroyMatchesAt(int column, int row){
+        
+        if (allDots[column, row].GetComponent<Dot>().isMatched){
+
+            Destroy(allDots[column, row]);
+            allDots[column,row]= null;
+
+        }
+    }
+    
+
+    public void DestroyMatches(){
+
+        for (int i=0; i<width; i++){
+
+            for (int j = 0; j<height; j++){
+                if (allDots[i,j]!= null){
+                    DestroyMatchesAt(i,j);
+                }
+            }
+        }
     }
 }
