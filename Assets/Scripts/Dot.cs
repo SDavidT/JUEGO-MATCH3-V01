@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Dot : MonoBehaviour
 {
+    [Header("variables")]
     private Vector2 firstTouchPosition;
     private Vector2 finalTouchPosition;
     public float swipeAngle=0;
@@ -14,6 +15,10 @@ public class Dot : MonoBehaviour
     public int targetX;
     public int targetY;
     private Vector2 tempPosition;
+    public bool isMatched=false;
+    public int previousColumn;
+    public int previousRow;
+
 
 
     
@@ -26,11 +31,23 @@ public class Dot : MonoBehaviour
         row=targetY;
         column=targetX;
 
+        previousRow=row;
+        previousColumn=column;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+        FindMatches();
+        if(isMatched){
+            SpriteRenderer mySprite = GetComponent<SpriteRenderer>();
+            mySprite.color=new Color(1f,1f,1f,.2f);
+        }
+
+
+
+
         targetX=column;
         targetY=row;
         if(Mathf.Abs(targetX-transform.position.x)>.1){
@@ -53,6 +70,21 @@ public class Dot : MonoBehaviour
             board.allDots[column,row]=this.gameObject;
             
         }
+
+    }
+
+    public IEnumerator CheckMoveCo(){
+        yield return new WaitForSeconds(.5f);
+        if (otherDot!=null){
+            if(!isMatched && !otherDot.GetComponent<Dot>().isMatched){
+
+                otherDot.GetComponent<Dot>().row=row;
+                otherDot.GetComponent<Dot>().column=column;
+                row=previousRow;
+                column=previousColumn;
+            }
+            otherDot=null;
+        }
     }
 
     private void OnMouseDown(){
@@ -74,11 +106,11 @@ public class Dot : MonoBehaviour
     }
 
     void MovePieces(){
-        if(swipeAngle>-45 && swipeAngle<=45 && column<board.width){ // ir a la derecha
+        if(swipeAngle>-45 && swipeAngle<=45 && column<board.width-1){ // ir a la derecha
             otherDot=board.allDots[column+1,row];
             otherDot.GetComponent<Dot>().column=otherDot.GetComponent<Dot>().column-1;//desplazamiento del punto intercambiado - vecino
             column=column+1;//desplazamiento del punto seleccionado
-        }else if(swipeAngle>45 && swipeAngle<=135 && row< board.height){ // ir para arriba
+        }else if(swipeAngle>45 && swipeAngle<=135 && row< board.height-1){ // ir para arriba
             otherDot=board.allDots[column,row+1];
             otherDot.GetComponent<Dot>().row-=1;
             row+=1;
@@ -91,6 +123,40 @@ public class Dot : MonoBehaviour
             otherDot.GetComponent<Dot>().row+=1;
             row-=1;
         }
+
+        StartCoroutine(CheckMoveCo());
+    }
+
+    void FindMatches(){
+        if (column>0 && column < board.width-1){
+            GameObject leftDot1 = board.allDots[column-1,row];
+            GameObject rightDot1 = board.allDots[column+1,row];
+            
+            if(leftDot1.tag==this.gameObject.tag && rightDot1.tag==this.gameObject.tag){
+                
+                leftDot1.GetComponent<Dot>().isMatched=true;
+                rightDot1.GetComponent<Dot>().isMatched=true;
+
+                isMatched=true;
+
+            }
+        }
+
+        if (row>0 && row < board.height-1){
+            GameObject upDot1 = board.allDots[column,row+1];
+            GameObject downDot1 = board.allDots[column,row-1];
+            
+            if(upDot1.tag==this.gameObject.tag && downDot1.tag==this.gameObject.tag){
+                
+                upDot1.GetComponent<Dot>().isMatched=true;
+                downDot1.GetComponent<Dot>().isMatched=true;
+
+                isMatched=true;
+
+            }
+        }
+        
+
     }
 
 }
