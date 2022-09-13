@@ -27,13 +27,13 @@ public class Dot : MonoBehaviour
     void Start()
     {
         board=FindObjectOfType<Board>();
-        targetX=(int)transform.position.x;
-        targetY=(int)transform.position.y;
-        row=targetY;
-        column=targetX;
+        // targetX=(int)transform.position.x;
+        // targetY=(int)transform.position.y;
+        // row=targetY;
+        // column=targetX;
 
-        previousRow=row;
-        previousColumn=column;
+        // previousRow=row;
+        // previousColumn=column;
 
     }
 
@@ -82,7 +82,7 @@ public class Dot : MonoBehaviour
 
     // retorno del punto cuando no son iguales
     public IEnumerator CheckMoveCo(){ // corrutina 
-        yield return new WaitForSeconds(.5f); // timepo de retorno 
+        yield return new WaitForSeconds(.5f); // timepo de retorno de pieza a su lugar
         if (otherDot!=null){
             if(!isMatched && !otherDot.GetComponent<Dot>().isMatched){
 
@@ -118,18 +118,26 @@ public class Dot : MonoBehaviour
     void MovePieces(){
         if(swipeAngle>-45 && swipeAngle<=45 && column<board.width-1){ // ir a la derecha
             otherDot=board.allDots[column+1,row];
+            previousRow=row;
+            previousColumn=column;
             otherDot.GetComponent<Dot>().column=otherDot.GetComponent<Dot>().column-1;//desplazamiento del punto intercambiado - vecino
             column=column+1;//desplazamiento del punto seleccionado
         }else if(swipeAngle>45 && swipeAngle<=135 && row< board.height-1){ // ir para arriba
             otherDot=board.allDots[column,row+1];
+            previousRow=row;
+            previousColumn=column;
             otherDot.GetComponent<Dot>().row-=1;
             row+=1;
         } else if ((swipeAngle>135 || swipeAngle<=-135)&&column>0){ // ir a la izquierda
             otherDot=board.allDots[column-1,row];
+            previousRow=row;
+            previousColumn=column;
             otherDot.GetComponent<Dot>().column+=1;
             column-=1;
         }else if(swipeAngle<-45 && swipeAngle>=-135 && row>0){// ir para abajo
             otherDot=board.allDots[column,row-1];
+            previousRow=row;
+            previousColumn=column;
             otherDot.GetComponent<Dot>().row+=1;
             row-=1;
         }
@@ -169,6 +177,7 @@ public class Dot : MonoBehaviour
                     downDot1.GetComponent<Dot>().isMatched=true;
 
                     isMatched=true;
+                    
 
                 }
             }     

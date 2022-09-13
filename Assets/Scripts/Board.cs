@@ -11,6 +11,7 @@ public class Board : MonoBehaviour
     private BackgroundTile[,] allTiles;
     public GameObject [] dots;
     public GameObject[,] allDots;
+    public int offSet;
 
     // Start is called before the first frame update
     void Start()
@@ -19,7 +20,7 @@ public class Board : MonoBehaviour
         allTiles=new BackgroundTile[width, height];
         allDots=new GameObject[width,height];
         SetUp();
-        //hola
+        
         
 
     }
@@ -30,7 +31,7 @@ public class Board : MonoBehaviour
 
             for (int j = 0; j<height; j++){
                 // creacion de mosaicos o matriz
-                Vector2 tempPosition= new Vector2(i,j);// representacion de vectores y posicion 2d con ejes X y Y
+                Vector2 tempPosition= new Vector2(i,j+offSet);// representacion de vectores y posicion 2d con ejes X y Y
                 GameObject backgroundTile = Instantiate (tilePrefab, tempPosition, Quaternion.identity) as GameObject; // clona objetos moviendo la posicion y con rotacion 0
                 backgroundTile.transform.parent=this.transform; // se asigna cada objeto al objeto padre
                 backgroundTile.name="( " + i + ", " + j + " )"; // se asigna el nombre a cada objeto
@@ -46,6 +47,8 @@ public class Board : MonoBehaviour
                 }
                 maxIterations=0;
                 GameObject dot = Instantiate(dots[dotToUse],tempPosition, Quaternion.identity);
+                dot.GetComponent<Dot>().column=i;
+                dot.GetComponent<Dot>().row=j;
                 dot.transform.parent= this.transform;
                 dot.name= "( " + i + ", " + j + " )";
                 allDots[i,j]=dot;
@@ -138,6 +141,59 @@ public class Board : MonoBehaviour
             nullCount=0;
         }
 
-        yield return new WaitForSeconds(.4f);
+        yield return new WaitForSeconds(.4f); // tiempo que demora en crear nuevos puntos para descender 
+
+        StartCoroutine(FillBoardCo());
+    }
+
+// Rellenar los espacios vacios una vez destruidos
+    private void RefillBoard(){
+        for(int i=0; i<width;i++){
+
+            for(int j=0; j<height; j++){
+                
+                if(allDots[i,j]==null){
+                    Vector2 tempPosition=new Vector2(i,j+offSet);
+                    int dotToUse=Random.Range(0,dots.Length);
+                    GameObject piece= Instantiate(dots[dotToUse],tempPosition,Quaternion.identity);
+                    allDots[i,j]=piece;
+                    piece.GetComponent<Dot>().column=i;
+                    piece.GetComponent<Dot>().row=j;
+                }
+            }
+        }
+    }
+
+    private bool MatchesOnBoard(){
+
+        for(int i=0; i<width;i++){
+
+            for(int j=0; j<height; j++){
+                
+                if(allDots[i,j]!=null){
+
+                    if(allDots[i,j].GetComponent<Dot>().isMatched){
+                        
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+
+   // animación visual para relleno de espacios vacíos 
+    private IEnumerator FillBoardCo(){
+
+        RefillBoard();
+        yield return new WaitForSeconds(.5f);
+
+        while(MatchesOnBoard()){
+            yield return new WaitForSeconds(.5f);
+            DestroyMatches();
+            
+        }
     }
 }
