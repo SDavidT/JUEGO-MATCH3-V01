@@ -20,13 +20,17 @@ public class Dot : MonoBehaviour
     public int previousRow;
     public float swipeResiste=1f;
     private FindMatches findMatches;
-
-
-
+    public bool isColumnBomb;
+    public bool isRowBomb;
+    public GameObject rowArrow;
+    public GameObject columnArrow;
+    
     
     // Start is called before the first frame update
     void Start()
     {
+        isColumnBomb=false;
+        isRowBomb=false;
         board=FindObjectOfType<Board>();
         findMatches=FindObjectOfType<FindMatches>();
         // targetX=(int)transform.position.x;
@@ -39,10 +43,20 @@ public class Dot : MonoBehaviour
 
     }
 
+    private void OnMouseOver() {
+
+        if (Input.GetMouseButtonDown(1)){
+
+            isRowBomb=true;
+            GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+            arrow.transform.parent=this.transform; 
+        }    
+    }
+
     // Update is called once per frame
     void Update()
     {
-        //FindMatches();
+        
 
         if(isMatched){
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>(); //generamos un componente sprite render 

@@ -117,6 +117,14 @@ MonoBehaviour:
   swipeAngle: 0
   column: 0
   row: 0
+  otherDot: {fileID: 0}
   targetX: 0
   targetY: 0
   isMatched: 0
+  previousColumn: 0
+  previousRow: 0
+  swipeResiste: 1
+  isColumnBomb: 0
+  isRowBomb: 0
+  rowArrow: {fileID: 1000413348138173505, guid: a15b9c9f1f36ff949b66a0cfca8df762, type: 3}
+  columnArrow: {fileID: 2382798287040711229, guid: 11983229f00615b4a8a87e90b8db89ac, type: 3}
