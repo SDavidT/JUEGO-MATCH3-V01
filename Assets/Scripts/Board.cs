@@ -2,9 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum GameState{
+    wait,
+    move
+}
 public class Board : MonoBehaviour
 {
 
+    public GameState currentState= GameState.move;
     public int width;
     public int height;
     public GameObject tilePrefab;
@@ -188,12 +194,15 @@ public class Board : MonoBehaviour
     private IEnumerator FillBoardCo(){
 
         RefillBoard();
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.5f);// tiempo de espera para rellenar con nuevos puntos
 
         while(MatchesOnBoard()){
-            yield return new WaitForSeconds(.5f);
+            yield return new WaitForSeconds(.5f); // tiempo de espera para destruir las nuevas piezas iguales 
             DestroyMatches();
             
         }
+
+        yield return new WaitForSeconds(.5f); 
+        currentState=GameState.move;
     }
 }

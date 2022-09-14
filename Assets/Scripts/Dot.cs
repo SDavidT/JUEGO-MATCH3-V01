@@ -19,6 +19,7 @@ public class Dot : MonoBehaviour
     public int previousColumn;
     public int previousRow;
     public float swipeResiste=1f;
+    private FindMatches findMatches;
 
 
 
@@ -27,6 +28,7 @@ public class Dot : MonoBehaviour
     void Start()
     {
         board=FindObjectOfType<Board>();
+        findMatches=FindObjectOfType<FindMatches>();
         // targetX=(int)transform.position.x;
         // targetY=(int)transform.position.y;
         // row=targetY;
@@ -40,7 +42,8 @@ public class Dot : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FindMatches();
+        //FindMatches();
+
         if(isMatched){
             SpriteRenderer mySprite = GetComponent<SpriteRenderer>(); //generamos un componente sprite render 
             mySprite.color=new Color(1f,1f,1f,.2f); // cambiamos de color los puntos
@@ -59,6 +62,8 @@ public class Dot : MonoBehaviour
                 board.allDots[column,row]=this.gameObject;
             }
 
+                findMatches.FindAllMatches();
+
         }else{
             tempPosition=new Vector2 (targetX,transform.position.y);
             transform.position= tempPosition;
@@ -71,6 +76,8 @@ public class Dot : MonoBehaviour
             if(board.allDots[column,row]!= this.gameObject){ //***
                 board.allDots[column,row]=this.gameObject;
             }
+
+                findMatches.FindAllMatches();
 
         }else{
             tempPosition=new Vector2 (transform.position.x,targetY);
@@ -90,6 +97,8 @@ public class Dot : MonoBehaviour
                 otherDot.GetComponent<Dot>().column=column;
                 row=previousRow;
                 column=previousColumn;
+                yield return new WaitForSeconds(.5f);
+                board.currentState=GameState.move;
             } else {
                 board.DestroyMatches();
                 }
@@ -98,19 +107,29 @@ public class Dot : MonoBehaviour
     }
 
     private void OnMouseDown(){
-        firstTouchPosition=Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        
+        if(board.currentState==GameState.move){
+            firstTouchPosition=Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        }
 
     }
 
     private void OnMouseUp(){
-        finalTouchPosition=Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        CalculateAngle();
+
+        if (board.currentState==GameState.move){
+
+            finalTouchPosition=Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            CalculateAngle();
+        }
     }
 
     void CalculateAngle(){
         if (Mathf.Abs(finalTouchPosition.y-firstTouchPosition.y)>swipeResiste || Mathf.Abs(finalTouchPosition.x-firstTouchPosition.x)>swipeResiste ){
             swipeAngle=Mathf.Atan2(finalTouchPosition.y-firstTouchPosition.y,finalTouchPosition.x-firstTouchPosition.x)*180/Mathf.PI;
             MovePieces();
+            board.currentState=GameState.wait;
+        } else {
+            board.currentState=GameState.move;
         }
     }
 
