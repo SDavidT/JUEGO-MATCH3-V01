@@ -38,9 +38,20 @@ public class FindMatches : MonoBehaviour
                         if (leftDot!=null && rightDot!= null){
 
                             if(leftDot.tag==currentDot.tag && rightDot.tag==currentDot.tag){
+
+                                if (!currentMatches.Contains(leftDot)){
+                                    currentMatches.Add(leftDot);
+                                }
                                 leftDot.GetComponent<Dot>().isMatched=true;
+                                if (!currentMatches.Contains(rightDot)){
+                                    currentMatches.Add(rightDot);
+                                }
                                 rightDot.GetComponent<Dot>().isMatched=true;
+                                if (!currentMatches.Contains(currentDot)){
+                                    currentMatches.Add(currentDot);
+                                }
                                 currentDot.GetComponent<Dot>().isMatched=true;
+
                             }
                         }
                     }
@@ -53,8 +64,17 @@ public class FindMatches : MonoBehaviour
                         if (upDot!=null && downDot!= null){
 
                             if(upDot.tag==currentDot.tag && downDot.tag==currentDot.tag){
+                                if (!currentMatches.Contains(upDot)){
+                                    currentMatches.Add(upDot);
+                                }
                                 upDot.GetComponent<Dot>().isMatched=true;
+                                if (!currentMatches.Contains(downDot)){
+                                    currentMatches.Add(downDot);
+                                }
                                 downDot.GetComponent<Dot>().isMatched=true;
+                                if (!currentMatches.Contains(currentDot)){
+                                    currentMatches.Add(currentDot);
+                                }
                                 currentDot.GetComponent<Dot>().isMatched=true;
                             }
                         }

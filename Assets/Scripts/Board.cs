@@ -18,11 +18,14 @@ public class Board : MonoBehaviour
     public GameObject [] dots;
     public GameObject[,] allDots;
     public int offSet;
+    public FindMatches findMatches;
+    public GameObject destroyEffect;
 
     // Start is called before the first frame update
     void Start()
     {
-        // generacion matriz]
+        findMatches=FindObjectOfType<FindMatches>();
+        // generacion matriz
         allTiles=new BackgroundTile[width, height];
         allDots=new GameObject[width,height];
         SetUp();
@@ -104,6 +107,10 @@ public class Board : MonoBehaviour
         
         if (allDots[column, row].GetComponent<Dot>().isMatched){
 
+            findMatches.currentMatches.Remove(allDots[column,row]);
+
+            GameObject particle=Instantiate(destroyEffect,allDots[column,row].transform.position, Quaternion.identity); // efecto para destruir puntos
+            Destroy(particle,.5f);
             Destroy(allDots[column, row]);
             allDots[column,row]= null;
 
