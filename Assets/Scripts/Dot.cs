@@ -10,7 +10,7 @@ public class Dot : MonoBehaviour
     public float swipeAngle=0;
     public int column;
     public int row;
-    private GameObject otherDot;
+    public GameObject otherDot;
     private Board board;
     public int targetX;
     public int targetY;
@@ -98,11 +98,12 @@ public class Dot : MonoBehaviour
                 row=previousRow;
                 column=previousColumn;
                 yield return new WaitForSeconds(.5f);
+                board.currentDot=null;
                 board.currentState=GameState.move;
             } else {
                 board.DestroyMatches();
                 }
-            otherDot=null;
+            //otherDot=null;
         } 
     }
 
@@ -128,6 +129,7 @@ public class Dot : MonoBehaviour
             swipeAngle=Mathf.Atan2(finalTouchPosition.y-firstTouchPosition.y,finalTouchPosition.x-firstTouchPosition.x)*180/Mathf.PI;
             MovePieces();
             board.currentState=GameState.wait;
+            board.currentDot = this;
         } else {
             board.currentState=GameState.move;
         }

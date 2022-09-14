@@ -20,6 +20,7 @@ public class Board : MonoBehaviour
     public int offSet;
     public FindMatches findMatches;
     public GameObject destroyEffect;
+    public Dot currentDot;
 
     // Start is called before the first frame update
     void Start()
