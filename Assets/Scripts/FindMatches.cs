@@ -162,12 +162,14 @@ public class FindMatches : MonoBehaviour
 
                 // }
 
-                if((board.currentDot.swipeAngle>-45 && board.currentDot.swipeAngle<=45) || (board.currentDot.swipeAngle<-135 && board.currentDot.swipeAngle>=135)){
+                board.currentDot.MakeRowBomb();
 
-                    board.currentDot.MakeRowBomb();
-                } else{
-                    board.currentDot.MakeColumnBomb();
-                }
+                // if((board.currentDot.swipeAngle>-45 && board.currentDot.swipeAngle<=45) || (board.currentDot.swipeAngle<-135 && board.currentDot.swipeAngle>=135)){
+
+                //     board.currentDot.MakeRowBomb();
+                // } else{
+                //     board.currentDot.MakeColumnBomb();
+                // }
             
             } else if(board.currentDot.otherDot!=null){
 

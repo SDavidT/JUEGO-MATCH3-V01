@@ -108,10 +108,10 @@ public class Board : MonoBehaviour
         
         if (allDots[column, row].GetComponent<Dot>().isMatched){
 
-            if(findMatches.currentMatches.Count==4 || findMatches.currentMatches.Count==7){
+            findMatches.CheckBombs();
+            // if(findMatches.currentMatches.Count==4 || findMatches.currentMatches.Count==7){
 
-                findMatches.CheckBombs();
-            }
+            // }
 
             findMatches.currentMatches.Remove(allDots[column,row]);
 

@@ -178,7 +178,7 @@ public class Dot : MonoBehaviour
             if(otherDot.tag==board.allDots[column-1,row].tag){
 
                 otherDot.GetComponent<Dot>().isMatched=true;
-                //board.allDots[column-1,row].isMatched=true;
+                board.allDots[column-1,row].GetComponent<Dot>().isMatched=true;
             }
 
             //Debug.Log(otherDot.tag);//punto al que me dirijo 
