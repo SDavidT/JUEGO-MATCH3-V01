@@ -20,6 +20,7 @@ public class FindMatches : MonoBehaviour
         StartCoroutine(FindAllMatchesCo());
     }
 
+
     private IEnumerator FindAllMatchesCo(){
 
         yield return new WaitForSeconds(.2f);
@@ -90,6 +91,22 @@ public class FindMatches : MonoBehaviour
         }
     }
 
+//*******************
+    public void MatchPiecesOfColor(string color){
+        for (int i = 0; i < board.width; i ++){
+            for (int j = 0; j < board.height; j ++){
+                //Check if that piece exists
+                if(board.allDots[i, j] != null){
+                    //Check the tag on that dot
+                    if(board.allDots[i, j].tag == color){
+                        //Set that dot to be matched
+                        board.allDots[i, j].GetComponent<Dot>().isMatched = true;
+                    }
+                }
+            }
+        }
+    }
+
     List<GameObject> GetColumnPiece(int column){
         List<GameObject> dots=new List<GameObject>();
 
@@ -119,6 +136,7 @@ public class FindMatches : MonoBehaviour
     }
 
 
+// chequeo si la bomba debe generarse horizontal o vertical y llamado a la funcion de generacion de bombas
     public void CheckBombs(){
 
         if(board.currentDot!=null){
@@ -126,18 +144,51 @@ public class FindMatches : MonoBehaviour
             if(board.currentDot.isMatched){
 
                 board.currentDot.isMatched=false;
-                int typeOfBomb =Random.Range(0,100);
+                // int typeOfBomb =Random.Range(0,100);
 
-                if(typeOfBomb<50){
+                // if(typeOfBomb<50){
 
-                } else if (typeOfBomb>=50){
+                //     board.currentDot.MakeRowBomb();
+                // } else if (typeOfBomb>=50){
 
+                //     board.currentDot.MakeColumnBomb();
+
+                // }
+
+                if((board.currentDot.swipeAngle>-45 && board.currentDot.swipeAngle<=45) || (board.currentDot.swipeAngle<-135 && board.currentDot.swipeAngle>=135)){
+
+                    board.currentDot.MakeRowBomb();
+                } else{
+                    board.currentDot.MakeColumnBomb();
                 }
             
-            } else if(board.currentDot.otherDot.GetComponent<Dot>().isMatched){
+            } else if(board.currentDot.otherDot!=null){
 
+                Dot otherDot = board.currentDot.otherDot.GetComponent<Dot>();
+                if( otherDot.isMatched){
+
+                    otherDot.isMatched=false;
+
+                    // int typeOfBomb =Random.Range(0,100);
+
+                    // if(typeOfBomb<50){
+
+                    //     otherDot.MakeRowBomb();
+                    // } else if (typeOfBomb>=50){
+
+                    //     otherDot.MakeColumnBomb();
+
+                    // }
+
+                    if((board.currentDot.swipeAngle>-45 && board.currentDot.swipeAngle<=45) || (board.currentDot.swipeAngle<-135 && board.currentDot.swipeAngle>=135)){
+
+                        otherDot.MakeRowBomb();
+                    } else{
+                        otherDot.MakeColumnBomb();
+                    }
+
+                }
             }
         }
-
     }
 }

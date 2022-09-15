@@ -24,7 +24,8 @@ public class Dot : MonoBehaviour
     public bool isRowBomb;
     public GameObject rowArrow;
     public GameObject columnArrow;
-    
+    public bool isColorBomb;
+    public GameObject colorBomb;
     
     // Start is called before the first frame update
     void Start()
@@ -47,9 +48,9 @@ public class Dot : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1)){
 
-            isRowBomb=true;
-            GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
-            arrow.transform.parent=this.transform; 
+            isColorBomb=true;
+            GameObject color = Instantiate(colorBomb, transform.position, Quaternion.identity);
+            color.transform.parent=this.transform; 
         }    
     }
 
@@ -58,10 +59,10 @@ public class Dot : MonoBehaviour
     {
         
 
-        if(isMatched){
-            SpriteRenderer mySprite = GetComponent<SpriteRenderer>(); //generamos un componente sprite render 
-            mySprite.color=new Color(1f,1f,1f,.2f); // cambiamos de color los puntos
-        }
+        // if(isMatched){
+        //     SpriteRenderer mySprite = GetComponent<SpriteRenderer>(); //generamos un componente sprite render 
+        //     mySprite.color=new Color(1f,1f,1f,.2f); // cambiamos de color los puntos
+        // }
 
 
 
@@ -103,6 +104,18 @@ public class Dot : MonoBehaviour
 
     // retorno del punto cuando no son iguales
     public IEnumerator CheckMoveCo(){ // corrutina 
+        
+        //******************
+        if(isColorBomb){
+            //This piece is a color bomb, and the other piece is the color to destroy
+            findMatches.MatchPiecesOfColor(otherDot.tag);
+            isMatched = true;
+        }else if(otherDot.GetComponent<Dot>().isColorBomb){
+            //The other piece is a color bomb, and this piece has the color to destroy
+            findMatches.MatchPiecesOfColor(this.gameObject.tag);
+            otherDot.GetComponent<Dot>().isMatched = true;
+        }
+
         yield return new WaitForSeconds(.5f); // timepo de retorno de pieza a su lugar
         if (otherDot!=null){
             if(!isMatched && !otherDot.GetComponent<Dot>().isMatched){
@@ -217,5 +230,19 @@ public class Dot : MonoBehaviour
     //             }
     //         }     
     //     }
-    // }  
+    // } 
+
+
+// funcion para generacion de linea de bombas vertical y horizontal 
+    public void MakeRowBomb(){
+        isRowBomb=true;
+        GameObject arrow = Instantiate(rowArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent=this.transform; 
+    } 
+
+    public void MakeColumnBomb(){
+        isColumnBomb=true;
+        GameObject arrow = Instantiate(columnArrow, transform.position, Quaternion.identity);
+        arrow.transform.parent=this.transform; 
+    } 
 }

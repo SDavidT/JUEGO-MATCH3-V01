@@ -108,6 +108,11 @@ public class Board : MonoBehaviour
         
         if (allDots[column, row].GetComponent<Dot>().isMatched){
 
+            if(findMatches.currentMatches.Count==4 || findMatches.currentMatches.Count==7){
+
+                findMatches.CheckBombs();
+            }
+
             findMatches.currentMatches.Remove(allDots[column,row]);
 
             GameObject particle=Instantiate(destroyEffect,allDots[column,row].transform.position, Quaternion.identity); // efecto para destruir puntos

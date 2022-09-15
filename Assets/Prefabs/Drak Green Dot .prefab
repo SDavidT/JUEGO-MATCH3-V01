@@ -128,3 +128,5 @@ MonoBehaviour:
   isRowBomb: 0
   rowArrow: {fileID: 1000413348138173505, guid: a15b9c9f1f36ff949b66a0cfca8df762, type: 3}
   columnArrow: {fileID: 2382798287040711229, guid: 11983229f00615b4a8a87e90b8db89ac, type: 3}
+  isColorBomb: 0
+  colorBomb: {fileID: 3065134756056753807, guid: 2db5adb839f2be54a9425ab65f1911cb, type: 3}
