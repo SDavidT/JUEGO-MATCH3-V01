@@ -209,13 +209,13 @@ public class Board : MonoBehaviour
         RefillBoard();
         yield return new WaitForSeconds(.5f);// tiempo de espera para rellenar con nuevos puntos
 
-        while(MatchesOnBoard()){
-            yield return new WaitForSeconds(.5f); // tiempo de espera para destruir las nuevas piezas iguales 
-            DestroyMatches();
+        // while(MatchesOnBoard()){
+        //     yield return new WaitForSeconds(.5f); // tiempo de espera para destruir las nuevas piezas iguales 
+        //     //DestroyMatches();
             
-        }
+        // }
 
-        yield return new WaitForSeconds(.5f); 
+        //yield return new WaitForSeconds(.5f); 
         currentState=GameState.move;
     }
 }

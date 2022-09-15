@@ -77,7 +77,9 @@ public class Dot : MonoBehaviour
                 board.allDots[column,row]=this.gameObject;
             }
 
-                findMatches.FindAllMatches();
+                //findMatches.FindAllMatches();
+                StartCoroutine(MatchTwoCo());
+                //MatchTwo();
 
         }else{
             tempPosition=new Vector2 (targetX,transform.position.y);
@@ -92,7 +94,9 @@ public class Dot : MonoBehaviour
                 board.allDots[column,row]=this.gameObject;
             }
 
-                findMatches.FindAllMatches();
+                //findMatches.FindAllMatches();
+                StartCoroutine(MatchTwoCo());
+                //MatchTwo();
 
         }else{
             tempPosition=new Vector2 (transform.position.x,targetY);
@@ -170,6 +174,15 @@ public class Dot : MonoBehaviour
             previousColumn=column;
             otherDot.GetComponent<Dot>().column=otherDot.GetComponent<Dot>().column-1;//desplazamiento del punto intercambiado - vecino
             column=column+1;//desplazamiento del punto seleccionado
+
+            if(otherDot.tag==board.allDots[column-1,row].tag){
+
+                otherDot.GetComponent<Dot>().isMatched=true;
+                //board.allDots[column-1,row].isMatched=true;
+            }
+
+            //Debug.Log(otherDot.tag);//punto al que me dirijo 
+            //Debug.Log(board.allDots[column-1,row].tag);// punto con el que me muevo
         }else if(swipeAngle>45 && swipeAngle<=135 && row< board.height-1){ // ir para arriba
             otherDot=board.allDots[column,row+1];
             previousRow=row;
@@ -193,6 +206,36 @@ public class Dot : MonoBehaviour
         StartCoroutine(CheckMoveCo());
     }
 
+
+
+    private IEnumerator MatchTwoCo(){
+
+        yield return new WaitForSeconds(.2f);
+
+        if (column>0 && column < board.width-1){
+            GameObject otro = board.allDots[column,row];
+            //GameObject rightDot1 = board.allDots[column+1,row];
+
+            if(otro!=null ){
+
+                
+
+                if(otro.tag==this.gameObject.tag ){
+                    
+                    //  otro.GetComponent<Dot>().isMatched=true;
+
+                    //  isMatched=true;
+                    Debug.Log("--------------------------");
+                    Debug.Log(otro.tag);
+                    Debug.Log(otro.transform.position);
+                    Debug.Log(this.gameObject.tag );
+                    Debug.Log(this.gameObject.transform.position);
+
+                }
+            }
+        }
+
+    }
     // buscar 3 puntos iguales 
 
     // void FindMatches(){
@@ -231,6 +274,9 @@ public class Dot : MonoBehaviour
     //         }     
     //     }
     // } 
+
+
+    
 
 
 // funcion para generacion de linea de bombas vertical y horizontal 

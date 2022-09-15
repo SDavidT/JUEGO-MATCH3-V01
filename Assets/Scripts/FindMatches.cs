@@ -8,6 +8,7 @@ public class FindMatches : MonoBehaviour
 
     private Board board;
     public List<GameObject> currentMatches = new List<GameObject>();
+    private Dot otroP;
     // Start is called before the first frame update
     void Start()
     {
@@ -18,7 +19,11 @@ public class FindMatches : MonoBehaviour
 
     public void FindAllMatches(){
         StartCoroutine(FindAllMatchesCo());
+        
     }
+
+
+   
 
 
     private IEnumerator FindAllMatchesCo(){
@@ -36,13 +41,15 @@ public class FindMatches : MonoBehaviour
                     if(i>0 && i<board.width-1){
                         GameObject leftDot=board.allDots[i-1,j];
                         GameObject rightDot=board.allDots[i+1,j];
+                        
 
                         if (leftDot!=null && rightDot!= null){
 
-                            if(leftDot.tag==currentDot.tag && rightDot.tag==currentDot.tag){
+                            
+
+                            if(leftDot.tag==currentDot.tag ){
 
                                 if (currentDot.GetComponent<Dot>().isRowBomb || leftDot.GetComponent<Dot>().isRowBomb || rightDot.GetComponent<Dot>().isRowBomb){
-
                                     currentMatches.Union(GetRowPieces(j));
                                 }
 
