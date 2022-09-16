@@ -150,7 +150,7 @@ public class FindMatches : MonoBehaviour
 
             if(board.currentDot.isMatched){
 
-                board.currentDot.isMatched=true;
+                board.currentDot.isMatched=false;
                 // int typeOfBomb =Random.Range(0,100);
 
                 // if(typeOfBomb<50){
@@ -178,7 +178,7 @@ public class FindMatches : MonoBehaviour
 
                     otherDot.isMatched=false;
 
-                    // int typeOfBomb =Random.Range(0,100);
+                    // int typeOfBomb =Ransdom.Range(0,100);
 
                     // if(typeOfBomb<50){
 

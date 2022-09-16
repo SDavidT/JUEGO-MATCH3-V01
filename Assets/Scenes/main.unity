@@ -157,9 +157,9 @@ MonoBehaviour:
   height: 4
   tilePrefab: {fileID: 3154687939425357, guid: 6bab5c2902954fd4b8f511cbc765209e, type: 3}
   dots:
-  - {fileID: 4156375146792406749, guid: 51c9ab365c6b4c24094355950c87ff33, type: 3}
-  - {fileID: 8378082698374085849, guid: a485a2a0d6d39934fa7a27308867aaf3, type: 3}
-  - {fileID: 3914217574969856734, guid: c2215e850a5a0704bbdbe18752a77c05, type: 3}
+  - {fileID: 3501083560776055978, guid: fee2fbaa63e842347aba681cbbeb774b, type: 3}
+  - {fileID: 8513762936790164400, guid: cfad261289e0c9245a29be0709fb12a7, type: 3}
+  - {fileID: 8947541922192255782, guid: da133a900bad6324280c3cf2a36e026b, type: 3}
   offSet: 20
   findMatches: {fileID: 0}
   destroyEffect: {fileID: 5328132718945332625, guid: 686d497b5c6f827478267fca07bebffe, type: 3}
