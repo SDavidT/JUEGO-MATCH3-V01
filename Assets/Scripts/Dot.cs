@@ -82,8 +82,8 @@ public class Dot : MonoBehaviour
             }
 
             //findMatches.FindAllMatches();
-            StartCoroutine(MatchTwoCo());
-            //MatchTwo();
+            //StartCoroutine(MatchTwoCo());
+            findMatches.MatchT();
 
         }
         else
@@ -103,8 +103,8 @@ public class Dot : MonoBehaviour
             }
 
             //findMatches.FindAllMatches();
-            StartCoroutine(MatchTwoCo());
-            //MatchTwo();
+            //StartCoroutine(MatchTwoCo());
+            findMatches.MatchT();
 
         }
         else
@@ -203,7 +203,7 @@ public class Dot : MonoBehaviour
             otherDot.GetComponent<Dot>().column = otherDot.GetComponent<Dot>().column - 1;//desplazamiento del punto intercambiado - vecino
             column = column + 1;//desplazamiento del punto seleccionado
 
-            if (otherDot.tag == board.allDots[column - 1, row].tag)
+            if (otherDot.tag == board.allDots[column - 1, row].tag) // destruye según la posición
             {
 
                 otherDot.GetComponent<Dot>().isMatched = true;

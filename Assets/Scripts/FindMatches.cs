@@ -18,7 +18,23 @@ public class FindMatches : MonoBehaviour
     public void FindAllMatches()
     {
         StartCoroutine(FindAllMatchesCo());
+        StartCoroutine(MatchTCo());
     }
+
+    public void MatchT()
+    {
+        StartCoroutine(MatchTCo());
+    }
+
+    private IEnumerator MatchTCo()
+    {
+        yield return new WaitForSeconds(.3f);
+        otroP = FindObjectOfType<Dot>();
+        Debug.Log("Datos");
+        Debug.Log(board.currentDot.column);
+        Debug.Log(board.currentDot.row);
+    }
+
 
     private IEnumerator FindAllMatchesCo()
     {

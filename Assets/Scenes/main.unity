@@ -153,21 +153,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 1
-  width: 7
-  height: 10
+  width: 5
+  height: 4
+  offSet: 20
   tilePrefab: {fileID: 3154687939425357, guid: 6bab5c2902954fd4b8f511cbc765209e, type: 3}
   dots:
-  - {fileID: 4878234504703861380, guid: 3df1424c47a19ac46bd3937d84abeeb7, type: 3}
-  - {fileID: 8378082698374085849, guid: a485a2a0d6d39934fa7a27308867aaf3, type: 3}
-  - {fileID: 4156375146792406749, guid: 51c9ab365c6b4c24094355950c87ff33, type: 3}
-  - {fileID: 2117760678301897439, guid: 3bd58b9daeb1d3d41a0fa17c6b60b1bd, type: 3}
-  - {fileID: 4056482370651668156, guid: 5964fcb55bdca114fb54ad173b4bc0ab, type: 3}
-  - {fileID: 2714284593494322424, guid: 49b3026f7db342345a1d916975901c0f, type: 3}
-  - {fileID: 735797690109339606, guid: 7586b97abdbf8a7408aed72fbf961a53, type: 3}
-  offSet: 20
-  findMatches: {fileID: 0}
+  - {fileID: 1108976849229794667, guid: c7a7ec10aa86e434fad699974dedbc63, type: 3}
+  - {fileID: 2264151273461487597, guid: cfad261289e0c9245a29be0709fb12a7, type: 3}
+  - {fileID: 11693293091035898, guid: da133a900bad6324280c3cf2a36e026b, type: 3}
   destroyEffect: {fileID: 5328132718945332625, guid: 686d497b5c6f827478267fca07bebffe, type: 3}
   currentDot: {fileID: 0}
+  findMatches: {fileID: 0}
 --- !u!4 &1228361595
 Transform:
   m_ObjectHideFlags: 0
