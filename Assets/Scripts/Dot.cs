@@ -177,9 +177,17 @@ public class Dot : MonoBehaviour
 
             if(otherDot.tag==board.allDots[column-1,row].tag){
 
-                otherDot.GetComponent<Dot>().isMatched=true;
-                board.allDots[column-1,row].GetComponent<Dot>().isMatched=true;
-            }
+                if(board.allDots[column-1,row].tag=="O" || board.allDots[column-1,row].tag=="H"){
+
+                    otherDot.GetComponent<Dot>().isMatched=true;
+                    board.allDots[column-1,row].GetComponent<Dot>().isMatched=true;
+                } 
+
+            } else if(otherDot.tag=="Dark Green Dot" || board.allDots[column-1,row].tag=="Indigo Dot"){
+
+                    otherDot.GetComponent<Dot>().isMatched=true;
+                    board.allDots[column-1,row].GetComponent<Dot>().isMatched=true;
+                } 
 
             //Debug.Log(otherDot.tag);//punto al que me dirijo 
             //Debug.Log(board.allDots[column-1,row].tag);// punto con el que me muevo
@@ -189,6 +197,8 @@ public class Dot : MonoBehaviour
             previousColumn=column;
             otherDot.GetComponent<Dot>().row-=1;
             row+=1;
+
+
         } else if ((swipeAngle>135 || swipeAngle<=-135)&&column>0){ // ir a la izquierda
             otherDot=board.allDots[column-1,row];
             previousRow=row;
